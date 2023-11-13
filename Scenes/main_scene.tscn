@@ -1,29 +1,60 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnwjktb6pkgxt"]
+[gd_scene load_steps=10 format=3 uid="uid://bnwjktb6pkgxt"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_yad2o"]
 [ext_resource type="Script" path="res://Scripts/champion.gd" id="2_ff00v"]
 [ext_resource type="Script" path="res://Scripts/BashSkill.gd" id="3_e3ogq"]
-[ext_resource type="Script" path="res://Scripts/PCGMap.gd" id="3_yjgmi"]
-[ext_resource type="Texture2D" uid="uid://dtodge6c2ckfx" path="res://icon.svg" id="3_ysdxf"]
+[ext_resource type="Texture2D" uid="uid://cb6ork1rnp63t" path="res://Sprites/Champions/Warrior.png" id="4_i5aso"]
 [ext_resource type="PackedScene" uid="uid://cicgwsrj1fg6o" path="res://Scenes/GameCamera.tscn" id="4_p7ldp"]
+[ext_resource type="Script" path="res://Scripts/RushSkill.gd" id="5_5qsq8"]
+[ext_resource type="PackedScene" uid="uid://ljt4pgrhd8bi" path="res://Scenes/PCGMap.tscn" id="6_q4uh2"]
+[ext_resource type="Script" path="res://Scripts/JumpSkill.gd" id="7_rtwm4"]
+[ext_resource type="Texture2D" uid="uid://k6mk24kee82x" path="res://Sprites/Champions/Wizard.png" id="8_psqu5"]
 
 [node name="MainScene" type="Node2D"]
+scale = Vector2(1, 0.99648)
 script = ExtResource("1_yad2o")
 
-[node name="GameCamera" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("4_p7ldp")]
-target_node = NodePath("../Warrior")
+[node name="PCGMap" parent="." instance=ExtResource("6_q4uh2")]
 
-[node name="PCGTileMap" type="TileMap" parent="."]
-format = 2
-script = ExtResource("3_yjgmi")
-
-[node name="Warrior" type="Node2D" parent="." node_paths=PackedStringArray("skill1", "sprite")]
+[node name="Warrior" type="Node2D" parent="." node_paths=PackedStringArray("skill1", "skill2", "skill3", "sprite")]
 script = ExtResource("2_ff00v")
+movement_speed_max = 4
 skill1 = NodePath("BashSkill")
+skill2 = NodePath("RushSkill")
+skill3 = NodePath("JumpSkill")
 sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Warrior"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_i5aso")
+
+[node name="RushSkill" type="Node" parent="Warrior"]
+script = ExtResource("5_5qsq8")
 
 [node name="BashSkill" type="Node" parent="Warrior"]
 script = ExtResource("3_e3ogq")
 
-[node name="Sprite2D" type="Sprite2D" parent="Warrior"]
-texture = ExtResource("3_ysdxf")
+[node name="JumpSkill" type="Node" parent="Warrior"]
+script = ExtResource("7_rtwm4")
+
+[node name="Wizard" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("2_ff00v")
+movement_speed_max = 2
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wizard"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_psqu5")
+
+[node name="Rouge" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("2_ff00v")
+movement_speed_max = 3
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Rouge"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_i5aso")
+
+[node name="GameCamera" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("4_p7ldp")]
+zoom = Vector2(0.75, 0.75)
+target_node = NodePath("../Warrior")

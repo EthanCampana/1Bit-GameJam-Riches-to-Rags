@@ -1,5 +1,5 @@
 extends Skill
-class_name BashSkill
+class_name JumpSkill
 
 
 var selectedCells= []
@@ -25,14 +25,8 @@ func select_tile(pos):
 	if pos not in selectedCells:
 		usedSkill = false
 		return
-	# Check if the tile they clicked on contains an enem
-	var selected : Champion = null
-	selected = GameController.getChampionAtTile(pos)
-	if selected == null:
-		usedSkill = false
-		return
-	# Apply what ever the skill does to the selected object
-	apply(selected)		
+
+	apply(pos)		
 	# At the end we want to turn off the toggle
 	toggled = false
 	usedSkill = false
@@ -52,32 +46,25 @@ func calculateTileLocation(tile : Vector2i):
 
 
 func apply(target):
-	var newPos : Vector2i
-	var currentPos = champ.tile_position
-	var pos = target.tile_position 
-	if currentPos.x > pos.x and currentPos.y > pos.y:
-		newPos.y = pos.y -1
-		newPos.x = pos.x 
-	elif currentPos.x == pos.x and currentPos.y > pos.y:
-		newPos.y = pos.y - 1
-		newPos.x = pos.x + 1 
-	elif currentPos.x > pos.x and currentPos.y < pos.y:
-		newPos.y = pos.y + 1
-		newPos.x = pos.x 
-	elif currentPos.x < pos.x and currentPos.y < pos.y:
-		newPos.y = pos.y + 1
-		newPos.x = pos.x + 1
-	target.tile_position = newPos
+	champ.tile_position = target
 	var tween = get_tree().create_tween()
-	tween.tween_property(target,"position",calculateTileLocation(newPos),.5).set_trans(tween.TRANS_SINE) 
+	tween.tween_property(champ,"position",calculateTileLocation(target),.5).set_trans(tween.TRANS_SINE) 
 	await tween.finished
 	GameController.emit_signal("check_death")
 
 
-
 # This stuff is going to update once we have a firm understanding on how the map works
 func tile_selection():
-	selectedCells = map.get_surrounding_cells(champ.tile_position)
+	selectedCells.append(Vector2i(champ.tile_position.x-1,champ.tile_position.y-2))
+	selectedCells.append(Vector2i(champ.tile_position.x+1,champ.tile_position.y-2))
+	selectedCells.append(Vector2i(champ.tile_position.x+1,champ.tile_position.y+2))
+	selectedCells.append(Vector2i(champ.tile_position.x-1,champ.tile_position.y+2))
+	for cell in selectedCells:
+		var id = map.getTileID(cell)
+		var c = GameController.getChampionAtTile(cell)
+		if c != null or id != 0 or id != 2:
+			selectedCells.erase(cell)
 	for cell in selectedCells:
 		map.set_cell(8,cell,0,Vector2i(0,1),0)
+	
 
