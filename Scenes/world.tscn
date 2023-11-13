@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cddotd5h14wda"]
+
+[ext_resource type="Script" path="res://Scripts/Level_Generator.gd" id="1_so546"]
+[ext_resource type="PackedScene" uid="uid://bu4f5qs3hr0bx" path="res://Scenes/Tile_Label.tscn" id="2_ip5wg"]
+[ext_resource type="PackedScene" uid="uid://bfccmseanj8ge" path="res://Scenes/Blocks.tscn" id="2_vt255"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_so546")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(-300, -250)
+limit_left = 0
+limit_top = 0
+
+[node name="TileMap" parent="." instance=ExtResource("2_vt255")]
+
+[node name="Tile_Label" parent="." instance=ExtResource("2_ip5wg")]
