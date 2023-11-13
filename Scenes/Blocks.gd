@@ -69,5 +69,10 @@ func generate_simple_level():
 func pick_random_layer() -> int:
 	return randi() % 8
 
+# After each turn, update the tiles with their modulate
 func update_layers_modulatity():
-	pass
+	for x_position in width:
+		for y_position in height:
+			#We need to get current layer, set the new one and decrease it by one.
+			var tile_pos = Vector2(x_position, y_position)
+			set_cell(0, tile_pos, 0, Vector2(2,0), 0)
