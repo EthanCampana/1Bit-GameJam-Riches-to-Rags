@@ -8,12 +8,20 @@ var label_scene = preload("res://Scenes/Tile_Label.tscn")
 var width = 20
 var height = 30
 
+var GameState = []
+
+class StateData:
+	var layer : int
+	var tile_position : Vector2i
+	var texture : Vector2i
+
 
 func _ready():
 #	moisture.seed j= randi()
 #	temperature.seed = randi()
 #	altitude.seed = randi()
 	generate_chunk(Vector2i(20,20))
+	var i : StateData = StateData.new()
 	
 	
 	
@@ -22,11 +30,10 @@ func _process(delta):
 	
 	if (Input.is_action_just_pressed("leftClick")):
 		var tile = local_to_map(get_global_mouse_position())
-		set_cell(0, tile, 0, Vector2(2,0), 0)
-	if(Input.is_action_just_pressed("rightClick")):
-		var tile = local_to_map(get_global_mouse_position())
-		erase_cell(0, tile)
+		movement(tile)
 		
+	if(Input.is_action_just_pressed("rightClick")):
+		clear_layer(0)
 	#generate_simple_level()
 	
 func generate_chunk(position):
@@ -62,12 +69,12 @@ func generate_simple_level():
 	for x_position in 50:
 		for y_position in 50:
 			var tile_pos = Vector2(x_position, y_position)
-			set_cell(0, tile_pos, 0, Vector2(2,0), 0)
+			set_cell(9, tile_pos, 0, Vector2(2,0), 0)
 			#set_tile_with_random_number(tile_pos)
 
 
 func pick_random_layer() -> int:
-	return randi() % 8
+	return randi() % 2 + 3
 
 # After each turn, update the tiles with their modulate
 func update_layers_modulatity():
@@ -76,3 +83,88 @@ func update_layers_modulatity():
 			#We need to get current layer, set the new one and decrease it by one.
 			var tile_pos = Vector2(x_position, y_position)
 			set_cell(0, tile_pos, 0, Vector2(2,0), 0)
+
+func movement(pos: Vector2i):
+	var m = movementDFS(pos)
+	var i = 0
+	for posi in m:
+		if i == 0:
+			i+=1
+			continue
+		set_cell(0, posi, 0, Vector2(1,0), 0)		
+
+
+func getUsedTiles():
+	var usedTiles = []
+	usedTiles += get_used_cells(0)
+	usedTiles += get_used_cells(1)
+	usedTiles += get_used_cells(2)
+	usedTiles += get_used_cells(3)
+	usedTiles += get_used_cells(4)
+	usedTiles += get_used_cells(5)
+	usedTiles += get_used_cells(6)
+	usedTiles += get_used_cells(7)
+	return usedTiles
+
+func getUsedTilesAppended():
+	var usedTiles = []
+	usedTiles.append( get_used_cells(0))
+	usedTiles.append(get_used_cells(1))
+	usedTiles.append( get_used_cells(2))
+	usedTiles.append( get_used_cells(3))
+	usedTiles.append(get_used_cells(4))
+	usedTiles.append( get_used_cells(5))
+	usedTiles.append(get_used_cells(6))
+	usedTiles.append( get_used_cells(7))
+	return usedTiles
+
+
+
+
+func saveGameState(tileLocations):
+	var appendedstate = getUsedTilesAppended()
+	for location in tileLocations:
+		var i = 0 
+		for list in appendedstate:
+			if location in list:
+				var tileState = StateData.new()
+				tileState.layer = i
+				tileState.tile_position = location
+				tileState.texture =  get_cell_tile_data(i,location).texture_origin
+				GameState.append(tileState)
+			i+=1
+
+func RestoreGameState():
+	for state in GameState:
+		set_cell(state.layer, state.tile_position, 0, state.texture, 0)
+	GameState.clear()
+	
+
+
+
+
+func movementDFS(pos : Vector2i):
+	var speed = 2 
+	var discovered = []
+	var stack = []
+	var usedTiles = getUsedTiles() 
+	if pos not in usedTiles:
+		return discovered
+	stack.append(pos)
+	while speed >= 0:
+		var cur_band = stack
+		stack = []
+		while !cur_band.is_empty():
+			var current = cur_band.pop_back()
+			if current not in discovered and current in usedTiles:
+				discovered.append(current)
+				if speed > 0:
+					stack += get_surrounding_cells(current)
+					stack.append(Vector2i(current.x+1,current.y))
+					stack.append(Vector2i(current.x-1,current.y))
+					stack.append(Vector2i(current.x,current.y-2))
+					stack.append(Vector2i(current.x,current.y+2))
+
+		speed -= 1
+	saveGameState(discovered)
+	return discovered
