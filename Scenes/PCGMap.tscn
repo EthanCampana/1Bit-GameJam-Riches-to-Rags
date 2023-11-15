@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ljt4pgrhd8bi"]
+
+[ext_resource type="Script" path="res://Scripts/PCGMap.gd" id="1_3a2ad"]
+
+[node name="PCGMap" type="TileMap"]
+format = 2
+script = ExtResource("1_3a2ad")
