@@ -32,5 +32,5 @@ func select_tile(pos):
 func tile_selection():
     var selectedCells = map.get_surrounding_cells(map.local_to_map(champ.position))
     for cell in selectedCells:
-        map.set_cell(2,cell,map.get_cell_source_id(1,cell),map.get_cell_atlas_coords(1,cell),0)
+        map.set_cell(9,cell,map.get_cell_source_id(1,cell),map.get_cell_atlas_coords(1,cell),0)
 
