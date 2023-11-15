@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cb1tprwhflb57"
-path="res://.godot/imported/CARTA_2-7.png-f45adcc2fed90b1cecc5fcf3bea1ab3b.ctex"
+uid="uid://xwhnsntomuh5"
+path="res://.godot/imported/CARTA_2-2.png-a396c5c80a90077f47aa0ba2381183a3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Background/CARTA_2-7.png"
-dest_files=["res://.godot/imported/CARTA_2-7.png-f45adcc2fed90b1cecc5fcf3bea1ab3b.ctex"]
+source_file="res://Background_frame/CARTA_2-2.png"
+dest_files=["res://.godot/imported/CARTA_2-2.png-a396c5c80a90077f47aa0ba2381183a3.ctex"]
 
 [params]
 

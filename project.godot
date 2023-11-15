@@ -11,16 +11,15 @@ config_version=5
 [application]
 
 config/name="1Bit GameJam: Riches to Rags"
-run/main_scene="res://movement_test.tscn"
+run/main_scene="res://Scenes/movement_test.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
-config/icon="res://icon.svg"
 
 [display]
 
 window/size/viewport_width=500
 window/size/viewport_height=300
-window/size/window_width_override=1000
-window/size/window_height_override=600
+window/size/window_width_override=2000
+window/size/window_height_override=900
 window/stretch/mode="canvas_items"
 window/per_pixel_transparency/allowed=true
 window/canvas_textures/default_texture_filter=1

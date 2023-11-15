@@ -1,10 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bssjhuhcq737w"]
+[gd_scene load_steps=8 format=3 uid="uid://d0etceuq3snx8"]
 
-[ext_resource type="Texture2D" uid="uid://djv36t53bskey" path="res://Sprites/grass.png" id="1_4wuou"]
-[ext_resource type="Script" path="res://GameCamera.gd" id="1_8kjq6"]
+[ext_resource type="Texture2D" uid="uid://djv36t53bskey" path="res://Sprites/Tiles/grass.png" id="1_4wuou"]
+[ext_resource type="Script" path="res://Scripts/GameCamera.gd" id="1_7s1uv"]
 [ext_resource type="Texture2D" uid="uid://cb6ork1rnp63t" path="res://Sprites/CARTA_2-4.png" id="2_o1rn7"]
 [ext_resource type="Script" path="res://Sprite2D.gd" id="3_chj4v"]
-[ext_resource type="Script" path="res://AttackSkill.gd" id="5_37q44"]
+[ext_resource type="Script" path="res://Scripts/AttackSkill.gd" id="5_6uie8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_83rbs"]
 resource_name = "Grass"
@@ -25,7 +25,7 @@ sources/0 = SubResource("TileSetAtlasSource_83rbs")
 position = Vector2(268, 100)
 scale = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
-script = ExtResource("1_8kjq6")
+script = ExtResource("1_7s1uv")
 target_node = NodePath("../Carta2-4")
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -62,4 +62,4 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_o1rn7")
 
 [node name="AttackSkill" type="Node" parent="."]
-script = ExtResource("5_37q44")
+script = ExtResource("5_6uie8")

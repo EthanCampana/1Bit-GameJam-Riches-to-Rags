@@ -1,5 +1,9 @@
-[gd_scene format=3 uid="uid://bu4f5qs3hr0bx"]
+[gd_scene load_steps=2 format=3 uid="uid://bu4f5qs3hr0bx"]
+
+[ext_resource type="PackedScene" uid="uid://d0etceuq3snx8" path="res://Scenes/movement_test.tscn" id="1_3aywt"]
 
 [node name="Label" type="Label"]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="MovementTest" parent="." instance=ExtResource("1_3aywt")]

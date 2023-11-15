@@ -5,8 +5,10 @@ var label_scene = preload("res://Scenes/Tile_Label.tscn")
 #var moisture = FastNoiseLite.new()
 #var temperature = FastNoiseLite.new()
 #var altitude = FastNoiseLite.new()
-var width = 20
-var height = 30
+var width = 40
+var height = 60
+
+var dict_preffered_tiles = {0: .80, 1: .30, 2: .15, 3: .30}
 
 
 func _ready():
@@ -36,6 +38,7 @@ func generate_chunk(position):
 #			var temp = temperature.get_noise_2d(tile_pos.x + x, tile_pos.y + y)
 #			var alt = altitude.get_noise_2d(tile_pos.x + x, tile_pos.y + y)
 			var ID = pick_random_ID()
+			print(ID)
 			set_cell(0, Vector2i(tile_pos.x + x, tile_pos.y + y), ID, random_tile_selector(ID))
 			var random_number = randi() % 8  # Generates a random number between 0 and 7
 			tile_data[tile_pos] = random_number
@@ -48,7 +51,6 @@ func generate_chunk(position):
 		#	get_parent().add_child(label)  # Adding the label to the TileMap's parent node
 
 func random_tile_selector(ID_number) -> Vector2i:
-	var list_of_tiles = [Vector2i(0,1),Vector2i(0,0),Vector2i(0,0)]	
 	if ID_number == 0:
 		return Vector2i(0,1)
 	elif ID_number == 1:
@@ -66,20 +68,17 @@ func get_tile_number(tile_position):
 	else:
 		return null  # Or any other default value
 
-func generate_simple_level():
-	for x_position in 50:
-		for y_position in 50:
-			var tile_pos = Vector2(x_position, y_position)
-			set_cell(pick_random_ID(), tile_pos, 0, Vector2(2,0), 0)
-			#set_tile_with_random_number(tile_pos)
-
 
 func pick_random_layer() -> int:
 	return randi() % 8
 
 
 func pick_random_ID() -> int:
-	return randi() % 3
+	for ID_val in dict_preffered_tiles:
+		print(dict_preffered_tiles[ID_val])
+		if dict_preffered_tiles[ID_val] > randf() :
+			return ID_val
+	return 0
 	
 	
 # After each turn, update the tiles with their modulate
