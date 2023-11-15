@@ -1,6 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://cu8o3v13s0r6n"]
 
 [ext_resource type="PackedScene" uid="uid://bu4f5qs3hr0bx" path="res://Scenes/Tile_Label.tscn" id="2_ip5wg"]
+<<<<<<< HEAD
 [ext_resource type="PackedScene" uid="uid://cybc5qthnhdgg" path="res://f_tiles.tscn" id="3_36ali"]
 [ext_resource type="Texture2D" uid="uid://cts1q3gtceat4" path="res://Background/CARTA_2-1.png" id="3_px62s"]
 [ext_resource type="Texture2D" uid="uid://xwhnsntomuh5" path="res://Background/CARTA_2-2.png" id="4_suhku"]
@@ -55,6 +56,9 @@ sources/5 = SubResource("TileSetAtlasSource_rymlh")
 sources/6 = SubResource("TileSetAtlasSource_lkg1f")
 sources/7 = SubResource("TileSetAtlasSource_q27yi")
 sources/8 = SubResource("TileSetAtlasSource_3p2cf")
+=======
+[ext_resource type="PackedScene" path="res://scenes/Blocks.tscn" id="2_vt255"]
+>>>>>>> 47e6208e3c31269fcd2c01fef8ec8193d1ada2bc
 
 [node name="World" type="Node2D"]
 script = SubResource("GDScript_nnxa7")
@@ -63,6 +67,7 @@ script = SubResource("GDScript_nnxa7")
 limit_left = 100
 limit_top = 200
 
+<<<<<<< HEAD
 [node name="Backgroun_Tilemap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_m0g8y")
 cell_quadrant_size = 128
@@ -93,6 +98,25 @@ layer_3/y_sort_enabled = false
 layer_3/y_sort_origin = 0
 layer_3/z_index = 0
 layer_3/tile_data = PackedInt32Array()
+=======
+[node name="TileMap" parent="." instance=ExtResource("2_vt255")]
+y_sort_enabled = true
+layer_0/modulate = Color(1, 1, 1, 1)
+layer_0/y_sort_enabled = true
+layer_1/y_sort_enabled = true
+layer_2/y_sort_enabled = true
+layer_3/y_sort_enabled = true
+layer_4/y_sort_enabled = true
+layer_5/y_sort_enabled = true
+layer_6/y_sort_enabled = true
+layer_7/name = "Layer 8"
+layer_7/enabled = true
+layer_7/modulate = Color(1, 0, 0, 1)
+layer_7/y_sort_enabled = true
+layer_7/y_sort_origin = 0
+layer_7/z_index = 0
+layer_7/tile_data = PackedInt32Array()
+>>>>>>> 47e6208e3c31269fcd2c01fef8ec8193d1ada2bc
 
 [node name="Tile_Label" parent="." instance=ExtResource("2_ip5wg")]
 metadata/_edit_use_anchors_ = true
