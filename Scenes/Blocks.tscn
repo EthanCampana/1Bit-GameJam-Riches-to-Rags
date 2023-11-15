@@ -748,6 +748,7 @@ cell_quadrant_size = 32
 format = 2
 layer_0/name = "Layer 1"
 layer_0/modulate = Color(1, 1, 1, 0.164706)
+layer_0/tile_data = PackedInt32Array(196607, 131072, 0, 262143, 131072, 0, 131071, 131072, 0, 131072, 131072, 0)
 layer_1/name = "Layer 2"
 layer_1/enabled = true
 layer_1/modulate = Color(1, 1, 1, 0.270588)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wid2cpab8pi4"
-path="res://.godot/imported/CARTA_2.png-0862c75eaf6770635c2dfc1fb6164fe0.ctex"
+uid="uid://djv36t53bskey"
+path="res://.godot/imported/grass.png-0ce4355d2779ac06cd7dbc44e7c57ebb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/CARTA_2.png"
-dest_files=["res://.godot/imported/CARTA_2.png-0862c75eaf6770635c2dfc1fb6164fe0.ctex"]
+source_file="res://Sprites/Tiles/grass.png"
+dest_files=["res://.godot/imported/grass.png-0ce4355d2779ac06cd7dbc44e7c57ebb.ctex"]
 
 [params]
 

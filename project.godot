@@ -17,10 +17,10 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=500
-window/size/viewport_height=300
-window/size/window_width_override=1000
-window/size/window_height_override=600
+window/size/viewport_width=600
+window/size/viewport_height=400
+window/size/window_width_override=1500
+window/size/window_height_override=900
 window/per_pixel_transparency/allowed=true
 window/canvas_textures/default_texture_filter=1
 
@@ -44,3 +44,4 @@ rightClick={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
