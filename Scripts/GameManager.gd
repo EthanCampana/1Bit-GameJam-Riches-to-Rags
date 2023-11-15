@@ -92,7 +92,7 @@ func startTurn():
 
 
 func endTurn():
-	currentTurn += 1 % 3
+	currentTurn += 1 % turnOrder.size() 
 	if currentTurn == 0:
 		map.normalize()
 	startTurn()
@@ -109,7 +109,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	print(warrior)
 	if !skillToggled:
 		handleInput()
 
