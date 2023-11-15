@@ -11,18 +11,25 @@ config_version=5
 [application]
 
 config/name="1Bit GameJam: Riches to Rags"
-run/main_scene="res://movement_test.tscn"
+run/main_scene="res://Scenes/main_scene.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameController="*res://Scripts/GameController.gd"
+
 [display]
 
-window/size/viewport_width=500
-window/size/viewport_height=300
+window/size/viewport_width=1000
+window/size/viewport_height=600
+window/size/mode=2
+window/size/initial_position_type=0
 window/size/window_width_override=1000
 window/size/window_height_override=600
 window/stretch/mode="canvas_items"
 window/per_pixel_transparency/allowed=true
+window/vsync/vsync_mode=0
 window/canvas_textures/default_texture_filter=1
 
 [dotnet]
@@ -45,4 +52,3 @@ rightClick={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)
