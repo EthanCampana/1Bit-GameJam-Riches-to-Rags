@@ -5,10 +5,11 @@ var tile_size = 128
 var GlobalTiles = []
 @onready var cam : GameCamera = $"../Camera2D"
 @onready var player2: Sprite2D = $"../Carta2-5"
+@onready var skill: AttackSkill= $"../AttackSkill"
 
 
 func _ready():
-	GlobalTiles = tiles.get_used_cells(0)	
+	GlobalTiles = tiles.get_used_cells(1)	
 	print(GlobalTiles)
 	position = calculateTileLocation(Vector2i(1,5))		
 	player2.position = calculateTileLocation(Vector2i(4,0))			
@@ -26,12 +27,15 @@ func _unhandled_input(event):
 	if event.is_action_released("ui_accept"):
 		zoomCameraIn()
 	if event.is_action_pressed("rightClick"):
-		cam.target_node = player2
+		if skill.skillBeingUsed:
+			var pos = skill.attack(tiles.local_to_map(get_global_mouse_position()))
+			move2(pos)
+		# cam.target_node = player2
 		
 
 func zoomCameraOut():
 	var tween = get_tree().create_tween()
-	var i 	=tween.tween_property(cam,"zoom",Vector2(0.5,0.5),1).set_trans(tween.TRANS_SINE)
+	var i 	= tween.tween_property(cam,"zoom",Vector2(0.5,0.5),1).set_trans(tween.TRANS_SINE)
 	await tween.finished
 
 func zoomCameraIn():
@@ -49,6 +53,10 @@ func calculateTileLocation(locale: Vector2i):
 	return endlocation
 
 
+func move2(tile):
+	var tween = get_tree().create_tween()
+	tween.tween_property(player2,"position",calculateTileLocation(tile),2).set_trans(tween.TRANS_SINE) 
+	await tween.finished
 
 func move(tile):
 	var tween = get_tree().create_tween()
