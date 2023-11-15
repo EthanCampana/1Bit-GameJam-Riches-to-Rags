@@ -7,7 +7,6 @@ var map : PCGTileMap
 var tile_size = 128 # This number will change
 var camera : GameCamera
 
-var worldCycle = -1
 
 @onready var warrior : Champion = $Warrior
 var wizard : Champion
@@ -86,15 +85,6 @@ func handleInput():
 			playerMove(map.local_to_map(map.get_global_mouse_position()))
 
 
-
-
-
-func normalizeWorld():
-	for x in range(worldCycle):
-		map.clear_layer(x)
-	map.updateMapData()
-
-
 func startTurn():
 	currentChamp = turnOrder[currentTurn]
 	currentChamp.normalize()
@@ -104,12 +94,12 @@ func startTurn():
 func endTurn():
 	currentTurn += 1 % 3
 	if currentTurn == 0:
-		worldCycle+=1
-		normalizeWorld()
+		map.normalize()
 	startTurn()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	GameController.connect("skill_toggled",self.on_skill_toggled)
 	turnOrder = [warrior, wizard, rogue]
 	turnOrder.shuffle()
 	for champ in turnOrder:
@@ -123,3 +113,13 @@ func _process(_delta):
 	if !skillToggled:
 		handleInput()
 
+
+
+func on_check_death():
+	for champ in turnOrder:
+		if !map.checkTileInMap(map.local_to_map(champ.position)):
+			champ.queue_free()
+
+
+func on_skill_toggled(on: bool):
+	skillToggled = on

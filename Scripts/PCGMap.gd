@@ -6,6 +6,18 @@ var mapData = []
 
 
 
+var worldCycle = 0 
+
+
+func normalize():
+	worldCycle +=1
+	var i = 0
+	while i < worldCycle:
+		clear_layer(i)
+	updateMapData()
+
+
+
 func getTileLayer(tile):
 	var i = 0
 	for layer in layerData:
@@ -26,6 +38,8 @@ func updateMapData():
 
 
 func updateOccupiedTileData(tile,occupied):
+	if !checkTileInMap(tile):
+		return
 	var layer = getTileLayer(tile)
 	var data = get_cell_tile_data(layer,tile)
 	data.set_custom_data("occupied",occupied)

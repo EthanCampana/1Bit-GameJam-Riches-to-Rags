@@ -14,10 +14,15 @@ func toggle(champ: Champion, map: TileMap):
     map = map
     champ = champ
     toggled = true  
+    GameController.emit_signal("skill_toggled", toggled)
 
 # This function defines the skills radius / selected tiles. How far can the skill reach? What tiles can it affect?
 # All of that goes here
 func tile_selection():
+    pass
+
+
+func apply(target):
     pass
 
 # This does the spells effect and handles all the tile checks.
