@@ -1,9 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://cn4nfaa20rgqt"]
 
-[ext_resource type="Script" path="res://champion.gd" id="1_4hhe2"]
+[ext_resource type="Script" path="res://Scripts/champion.gd" id="1_4hhe2"]
 
 [node name="Champion" type="Node2D"]
 script = ExtResource("1_4hhe2")
 movement_speed = 3
-
-[node name="Sprite2D" type="Sprite2D" parent="."]

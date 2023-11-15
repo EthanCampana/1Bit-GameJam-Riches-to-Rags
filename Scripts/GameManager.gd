@@ -3,13 +3,13 @@ extends Node
 var currentTurn : int
 var currentChamp: Champion
 var turnOrder = []
-var map : TileMap
+var map : PCGTileMap
 var tile_size = 128 # This number will change
 var camera : GameCamera
 
 var worldCycle = -1
 
-var warrior : Champion
+@onready var warrior : Champion = $Warrior
 var wizard : Champion
 var rogue : Champion
 
@@ -59,6 +59,8 @@ func showMovementTiles():
 
 
 func playerMove(location : Vector2i):
+	map.updateOccupiedTileData(map.local_to_map(currentChamp.position),TYPE_NIL )
+	map.updateOccupiedTileData(location,currentChamp)
 	var tween = get_tree().create_tween()
 	tween.tween_property(currentChamp,"position",calculateTileLocation(location),2).set_trans(tween.TRANS_SINE) 
 	await tween.finished
@@ -90,12 +92,12 @@ func handleInput():
 func normalizeWorld():
 	for x in range(worldCycle):
 		map.clear_layer(x)
-	updateMapData()
+	map.updateMapData()
 
 
 func startTurn():
 	currentChamp = turnOrder[currentTurn]
-	currentChamp.updateCoolDowns()
+	currentChamp.normalize()
 	camera.target_node = currentChamp
 
 
@@ -117,5 +119,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	print(warrior)
 	if !skillToggled:
 		handleInput()
+

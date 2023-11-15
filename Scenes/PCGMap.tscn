@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://ljt4pgrhd8bi"]
+
+[node name="PCGMap" type="TileMap"]
+format = 2

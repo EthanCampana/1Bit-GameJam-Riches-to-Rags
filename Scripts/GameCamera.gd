@@ -14,3 +14,14 @@ func _process(delta):
         
         # Set the camera position to the new calculated position
         position = new_position
+
+
+func zoomCameraOut():
+    var tween = get_tree().create_tween()
+    tween.tween_property(self,"zoom",Vector2(0.5,0.5),1).set_trans(tween.TRANS_SINE)
+    await tween.finished
+
+func zoomCameraIn():
+    var tween = get_tree().create_tween()
+    tween.tween_property(self,"zoom",Vector2(1,1),1).set_trans(tween.TRANS_SINE)
+    await tween.finished

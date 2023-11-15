@@ -4,7 +4,7 @@ class_name Skill
 var coolDownMax: int
 var coolDownCurrent: int    
 var coolDownActive : bool = false
-var map : TileMap
+var map : PCGTileMap
 var champ : Champion
 var toggled : bool = false  
 
