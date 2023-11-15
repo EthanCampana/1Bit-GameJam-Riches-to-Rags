@@ -7,20 +7,24 @@ class_name Champion
 @export var skill2 : Skill
 @export var skill3 : Skill
 @export var map : TileMap
+var skills = [skill1, skill2, skill3]	
 
 
 @onready var sprite : Sprite2D = $"Sprite2D"
 
 
 
-func useSkillOne():
-	skill1.toggle(self,map)
+func updateCoolDowns():
+	for skill in skills:
+		if skill.coolDownActive:
+			skill.coolDown -= 1
+			if skill.coolDown <= 0:
+				skill.coolDownActive = false
+				skill.coolDown = skill.coolDownMax
 
-func useSkillTwo():
-	skill2.toggle(self,map)
-	
-func useSkillThree():
-	skill3.toggle(self,map)
+
+func useSkill(skillNum):
+	skills[skillNum].toggle(self,map)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

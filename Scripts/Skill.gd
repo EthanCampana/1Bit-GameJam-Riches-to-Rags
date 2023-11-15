@@ -1,7 +1,9 @@
 extends Node
 class_name Skill
 
-var coolDown: int
+var coolDownMax: int
+var coolDownCurrent: int    
+var coolDownActive : bool = false
 var map : TileMap
 var champ : Champion
 var toggled : bool = false  
