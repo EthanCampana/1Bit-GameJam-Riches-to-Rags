@@ -29,7 +29,11 @@ func updateCoolDowns():
 
 
 func useSkill(skillNum):
-	skills[skillNum].toggle(self,map)
+	print(skills)
+	print(skill1)
+	print(skill2)
+	print(skill3)
+	skills[skillNum].tog2gle(self,map)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

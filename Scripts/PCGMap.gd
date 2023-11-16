@@ -157,6 +157,47 @@ func showMoveTiles(tiles):
 	for cell in tiles:
 		set_cell(8,cell,0,Vector2i(0,1),0)
 
+
+func getTileID(tile):
+	var layer = getTileLayer(tile)
+	if layer == null:
+		return 99
+	var data = get_cell_tile_data(layer,tile)
+	var id = data.get_custom_data("ID")
+	if id == null:
+		return 99 
+	return id
+
+	
+
+func updateMovementTiles(champ):
+	var moveTiles = []
+	var realMoves = []
+	var grid_pos = champ.tile_position
+	moveTiles += get_surrounding_cells(grid_pos)
+	# if Vector2i(grid_pos.x+1,grid_pos.y) in mapData:
+	# 	moveTiles.append(Vector2i(grid_pos.x+1,grid_pos.y))	
+	# if Vector2i(grid_pos.x-1,grid_pos.y) in mapData:
+	# 	moveTiles.append(Vector2i(grid_pos.x-1,grid_pos.y))	
+	# if Vector2i(grid_pos.x,grid_pos.y-2) in mapData:
+	# 	moveTiles.append(Vector2i(grid_pos.x,grid_pos.y-2))	
+	# if Vector2i(grid_pos.x,grid_pos.y+2) in mapData:
+	# 	moveTiles.append(Vector2i(grid_pos.x,grid_pos.y+2))	
+	for tile in moveTiles:
+		var id = getTileID(tile)
+		var c = GameController.getChampionAtTile(tile)
+		if c != null:
+			continue
+		if id == 0 or id == 2:
+			realMoves.append(tile)
+	showMoveTiles(realMoves)	
+	return realMoves
+
+func showMoveTiles(tiles):
+	clear_layer(8)
+	for cell in tiles:
+		set_cell(8,cell,0,Vector2i(0,1),0)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	updateMapData()

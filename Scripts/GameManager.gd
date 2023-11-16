@@ -30,6 +30,10 @@ func playerMove(location : Vector2i):
 	moveSound.play()
 	tween.tween_property(currentChamp,"position",calculateTileLocation(location),2).set_trans(tween.TRANS_SINE) 
 	await tween.finished
+	shownMovedTiles = false
+	moving = false
+	map.clear_layer(8)
+	
 
 	shownMovedTiles = false
 	moving = false
@@ -109,6 +113,7 @@ func endTurn():
 		gameEnd()
 		return
 	if currentTurn == 0:
+		print("We broke it")
 		map.normalize()
 	startTurn()
 
