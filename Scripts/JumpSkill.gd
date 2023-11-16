@@ -31,6 +31,7 @@ func select_tile(pos):
 	toggled = false
 	usedSkill = false
 	coolDownActive = true
+	coolDownCurrent = coolDownMax
 	GameController.emit_signal("skill_toggled", toggled)
 	return
 

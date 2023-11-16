@@ -9,7 +9,13 @@ var dict_preffered_tiles = {0: .80, 1: .30, 2: .15, 3: .30}
 
 var worldCycle = 0 
 
-
+func reset():
+	worldCycle = 0
+	for layer in range(get_layers_count()):
+		clear_layer(layer)
+	generate_chunk()
+	updateMapData()
+	updateLayerOpacity()
 
 func updateLayerOpacity():
 	for i in range(get_layers_count()-1):
@@ -26,13 +32,9 @@ func updateLayerOpacity():
 			col.a = .9
 			set_layer_modulate(i,col)
 
-			
-
-
 
 
 func calculateTileLocation(tile : Vector2i):
-	print(tile)
 	var endlocation : Vector2				
 	var global = map_to_local(tile)	
 	endlocation.x = global.x
@@ -94,9 +96,6 @@ func normalize():
 	GameController.emit_signal("check_death")
 	
 
-
-
-
 func getTileLayer(tile):
 	for i in range(get_layers_count()):
 		if tile in get_used_cells(i):
@@ -110,26 +109,10 @@ func checkTileInMap(tile):
 		return false
 
 func updateMapData():
+	mapData = []
 	for x in range(get_layers_count()):
 		mapData += get_used_cells(x)
 
-
-func updateOccupiedTileData(tile,occupied):
-	if !checkTileInMap(tile):
-		return
-	var layer = getTileLayer(tile)
-	var data = get_cell_tile_data(layer,tile)
-	data.set_custom_data("occupied",occupied)
-
-func getOccupiedTileData(tile):
-	var layer = getTileLayer(tile)
-	if layer == null:
-		return null
-	var data = get_cell_tile_data(layer,tile)
-	if data == null:
-		return null	
-	var custom_data = data.get_custom_data("occupied")
-	return custom_data
 
 
 
@@ -173,6 +156,8 @@ func showMoveTiles(tiles):
 	clear_layer(8)
 	for cell in tiles:
 		set_cell(8,cell,0,Vector2i(0,1),0)
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

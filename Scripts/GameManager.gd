@@ -3,93 +3,54 @@ extends Node
 var currentTurn : int
 var currentChamp: Champion
 var turnOrder = []
-@onready var map : PCGTileMap = $PCGMap
-var tile_size = 128 # This number will change
-@onready var camera : GameCamera = $GameCamera
-
-
-
-@onready var warrior : Champion = $Warrior
-@onready var wizard : Champion  = $Wizard
-@onready var rouge : Champion = $Rouge
-
-
 var skillToggled : bool
 var shownMovedTiles: bool
 var mapGenerated : bool	 = false
-var layerData= []	 
-var mapData = []
 var moveTiles = []
 var moving : bool = false
-
-# Need to create a Singleton Game Manageer to inform the GameManager about stuff
-# Need to think about sound implementation
+var gameOver = false
 
 
-
-
-
-func updateMapData():
-	for x in range(map.get_layers_count()):
-		layerData.append(map.get_used_cells(x))
-		mapData += map.get_used_cells(x)
-
+@onready var map : PCGTileMap = $PCGMap
+@onready var camera : GameCamera = $GameCamera
+@onready var warrior : Champion = $Warrior
+@onready var wizard : Champion  = $Wizard
+@onready var rouge : Champion = $Rouge
+@onready var moveSound = $MoveSound
 
 
 func showMovement():
 	moveTiles = map.updateMovementTiles(currentChamp)
 	shownMovedTiles = true
 
-# func updateMovementTiles():
-# 	# moveTiles = []
-# 	# var grid_pos = map.local_to_map(currentChamp.position)
-# 	# moveTiles += map.get_surrounding_cells(grid_pos)
-# 	# if Vector2i(grid_pos.x+1,grid_pos.y) in mapData:
-# 	# 	moveTiles.append(Vector2i(grid_pos.x+1,grid_pos.y))	
-# 	# if Vector2i(grid_pos.x-1,grid_pos.y) in mapData:
-# 	# 	moveTiles.append(Vector2i(grid_pos.x-1,grid_pos.y))	
-# 	# if Vector2i(grid_pos.x,grid_pos.y-2) in mapData:
-# 	# 	moveTiles.append(Vector2i(grid_pos.x,grid_pos.y-2))	
-# 	# if Vector2i(grid_pos.x,grid_pos.y+2) in mapData:
-# 	# 	moveTiles.append(Vector2i(grid_pos.x,grid_pos.y+2))	
-# 	moveTiles = map.updateMovementTiles(currentChamp)
-
-
-
-# func showMovementTiles():
-# 	shownMovedTiles = true
-# 	# for cell in moveTiles:
-# 	# 	map.set_cell(9,cell,map.get_cell_source_id(1,cell),map.get_cell_atlas_coords(1,cell),0)
-# 	# shownMovedTiles = true
-	
-
-
 func playerMove(location : Vector2i):
 	moving = true
 	currentChamp.tile_position = location
 	var tween = get_tree().create_tween()
-	tween.tween_property(currentChamp,"position",calculateTileLocation(location),.5).set_trans(tween.TRANS_SINE) 
+	moveSound.play()
+	tween.tween_property(currentChamp,"position",calculateTileLocation(location),2).set_trans(tween.TRANS_SINE) 
 	await tween.finished
 	shownMovedTiles = false
 	moving = false
 	map.clear_layer(8)
 	
 
-
+	shownMovedTiles = false
+	moving = false
+	map.clear_layer(8)
+	
 
 func calculateTileLocation(tile : Vector2i):
 	var endlocation : Vector2				
 	var global = map.map_to_local(tile)	
 	endlocation.x = global.x
-	endlocation.y = global.y - (1 * tile_size / 2)
+	endlocation.y = global.y - (1 * 128 / 2)
 	return endlocation
 
 
 
 func handleInput():
 	if !shownMovedTiles and currentChamp.movement_speed != 0:
-		# updateMovementTiles()
-		# showMovementTiles()
 		showMovement()
 	if Input.is_action_just_pressed("leftClick"):
 		if currentChamp.movement_speed != 0 && map.local_to_map(map.get_global_mouse_position()) in moveTiles && !moving:
@@ -105,7 +66,7 @@ func handleInput():
 		currentChamp.useSkill(1)
 	if Input.is_action_just_pressed("Skill3"):
 		currentChamp.useSkill(2)
-	if Input.is_action_just_pressed("ui_accept") and currentChamp.movement_speed == 0:
+	if Input.is_action_just_pressed("ui_accept"):
 		if map.getTileID(currentChamp.tile_position)== 2:
 				var locales = map.get_spawn_location()
 				print(locales)
@@ -115,6 +76,27 @@ func handleInput():
 		endTurn()
 
 
+
+func resetGame():
+	currentTurn = 0
+	turnOrder = [warrior, wizard, rouge]
+	turnOrder.shuffle()
+	map.reset()
+	gameOver = false
+	for champ in turnOrder:
+		var locales = map.get_spawn_location()
+		champ.position = locales[0]
+		champ.tile_position = locales[1]
+		champ.visible = true
+	gameOver = false
+	startTurn()
+
+
+func gameEnd():
+	camera.target_node = currentChamp
+	map.clear_layer(8)
+	gameOver = true
+
 func startTurn():
 	currentChamp = turnOrder[currentTurn]
 	currentChamp.normalize()
@@ -123,7 +105,13 @@ func startTurn():
 
 func endTurn():
 	currentTurn = (currentTurn+1) % turnOrder.size() 
-
+	shownMovedTiles = false	
+	if turnOrder.size() == 1:
+		resetGame()
+		return
+	if turnOrder.size() == 1:
+		gameEnd()
+		return
 	if currentTurn == 0:
 		print("We broke it")
 		map.normalize()
@@ -156,20 +144,16 @@ func gameSetup():
 func _process(_delta):
 	if !mapGenerated:
 		gameSetup()
-	if !skillToggled:
+	if !skillToggled and !gameOver:
 		handleInput()
-
-
 
 
 func on_check_death():
 	for champ in turnOrder:
 		var alive = map.checkTileInMap(champ.tile_position) 
-		print(alive)
 		if not alive:
-			print("YOU ARE DEAD")
 			turnOrder.erase(champ)
-			champ.queue_free()
+			champ.visible = false
 
 
 func on_skill_toggled(on: bool):

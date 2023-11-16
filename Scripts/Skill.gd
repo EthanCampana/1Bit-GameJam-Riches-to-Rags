@@ -1,8 +1,8 @@
 extends Node
 class_name Skill
 
-var coolDownMax: int
-var coolDownCurrent: int    
+@export var coolDownMax: int
+@export var coolDownCurrent: int    
 var coolDownActive : bool = false
 var map : PCGTileMap
 var champ : Champion

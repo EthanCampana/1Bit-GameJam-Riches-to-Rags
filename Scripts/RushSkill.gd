@@ -11,12 +11,13 @@ func select_tile(pos):
 	apply(champ) 
 	toggled = false
 	coolDownActive = true
+	coolDownCurrent = coolDownMax
 	GameController.emit_signal("skill_toggled", toggled)
 	return
 
 
 func apply(target):
-	target.movement_speed *=2
+	target.movement_speed += 4 
 
 func tile_selection():
 	cell = champ.tile_position
