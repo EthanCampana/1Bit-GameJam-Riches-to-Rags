@@ -33,7 +33,7 @@ func useSkill(skillNum):
 	print(skill1)
 	print(skill2)
 	print(skill3)
-	skills[skillNum].tog2gle(self,map)
+	skills[skillNum].toggle(self,map)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

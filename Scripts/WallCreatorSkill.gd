@@ -1,28 +1,33 @@
 extends Skill
-class_name RushSkill
+class_name WallCreatorSkill
 
-
-var cell: Vector2i
+var selectedCells= []
 var usedSkill : bool = false
 
 func select_tile(pos):
-	if pos != cell:
+	usedSkill = true
+	if pos not in selectedCells:
+		usedSkill = false
 		return
-	apply(champ) 
+	apply(pos) 
 	toggled = false
 	coolDownActive = true
 	coolDownCurrent = coolDownMax
 	GameController.emit_signal("skill_toggled", toggled)
 	return
 
-
+# Teleport the player to the random tile 
 func apply(target):
-	target.movement_speed += 4 
+	var layer = map.getTileLayer(target)
+	map.set_cell(layer,target,1,Vector2i(0,0))
 
+# Highlight the surrounding clickable tiles black
 func tile_selection():
-	cell = champ.tile_position
-	map.set_cell(8,cell,0,Vector2i(0,1),0)
+	selectedCells = map.get_surrounding_cells(champ.tile_position)
 
+	
+	for cell in selectedCells:
+		map.set_cell(8,cell,0,Vector2i(0,1),0)
 
 func _process(_delta):
 	if toggled:
