@@ -12,7 +12,7 @@ func _process(_delta):
 		tile_selection()
 		if Input.is_action_just_pressed("leftClick"):
 			select_tile(map.local_to_map(map.get_global_mouse_position()))
-		if Input.is_action_just_pressed("ui_accept") and not usedSkill:
+		if Input.is_action_just_pressed("rightClick") and not usedSkill:
 			toggled = false
 			GameController.emit_signal("skill_toggled", toggled)
 
