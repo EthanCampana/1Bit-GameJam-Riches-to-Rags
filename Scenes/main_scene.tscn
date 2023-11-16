@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnwjktb6pkgxt"]
+[gd_scene load_steps=14 format=3 uid="uid://bnwjktb6pkgxt"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_yad2o"]
 [ext_resource type="Script" path="res://Scripts/champion.gd" id="2_ff00v"]
@@ -9,6 +9,48 @@
 [ext_resource type="PackedScene" uid="uid://ljt4pgrhd8bi" path="res://Scenes/PCGMap.tscn" id="6_q4uh2"]
 [ext_resource type="Script" path="res://Scripts/JumpSkill.gd" id="7_rtwm4"]
 [ext_resource type="Texture2D" uid="uid://k6mk24kee82x" path="res://Sprites/Champions/Wizard.png" id="8_psqu5"]
+
+[sub_resource type="Animation" id="Animation_huujf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NewGameButton/NewGameCollision/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_22ioi"]
+resource_name = "test"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NewGameButton/NewGameCollision/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ucm67"]
+resource_name = "fadeOut"
+length = 0.5
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yrivx"]
+_data = {
+"RESET": SubResource("Animation_huujf"),
+"fadeIn": SubResource("Animation_22ioi"),
+"fadeOut": SubResource("Animation_ucm67")
+}
 
 [node name="MainScene" type="Node2D"]
 scale = Vector2(1, 0.99648)
@@ -58,3 +100,18 @@ texture = ExtResource("4_i5aso")
 [node name="GameCamera" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("4_p7ldp")]
 zoom = Vector2(0.75, 0.75)
 target_node = NodePath("../Warrior")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../../..")
+libraries = {
+"": SubResource("AnimationLibrary_yrivx")
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -483.0
+offset_top = -264.5
+offset_right = 526.0
+offset_bottom = 342.5
+size_flags_horizontal = 0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
