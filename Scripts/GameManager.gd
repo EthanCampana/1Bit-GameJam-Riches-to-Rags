@@ -59,13 +59,19 @@ func handleInput():
 			playerMove(map.local_to_map(map.get_global_mouse_position()))
 		
 	if Input.is_action_just_pressed("rightClick"):
-		print(map.local_to_map(map.get_global_mouse_position()))
+		var c = map.local_to_map(map.get_global_mouse_position())
+		print(c)
+		print(map.getTileID(c))
+
 	if Input.is_action_just_pressed("Skill1"):
-		currentChamp.useSkill(0)
+		if !currentChamp.skill1.coolDownActive:
+			currentChamp.useSkill(0)
 	if Input.is_action_just_pressed("Skill2"):
-		currentChamp.useSkill(1)
+		if !currentChamp.skill2.coolDownActive:
+			currentChamp.useSkill(1)
 	if Input.is_action_just_pressed("Skill3"):
-		currentChamp.useSkill(2)
+		if !currentChamp.skill3.coolDownActive:
+			currentChamp.useSkill(2)
 	if Input.is_action_just_pressed("ui_accept"):
 		if map.getTileID(currentChamp.tile_position)== 2:
 				var locales = map.get_spawn_location()

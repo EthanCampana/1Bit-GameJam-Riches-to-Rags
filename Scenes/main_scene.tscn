@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bnwjktb6pkgxt"]
+[gd_scene load_steps=16 format=3 uid="uid://bnwjktb6pkgxt"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_yad2o"]
 [ext_resource type="Script" path="res://Scripts/champion.gd" id="2_ff00v"]
@@ -9,12 +9,18 @@
 [ext_resource type="PackedScene" uid="uid://ljt4pgrhd8bi" path="res://Scenes/PCGMap.tscn" id="6_q4uh2"]
 [ext_resource type="Script" path="res://Scripts/JumpSkill.gd" id="7_rtwm4"]
 [ext_resource type="Texture2D" uid="uid://k6mk24kee82x" path="res://Sprites/Champions/Wizard.png" id="8_psqu5"]
+[ext_resource type="Script" path="res://Scripts/TeleportSkill.gd" id="9_n6g67"]
 [ext_resource type="AudioStream" uid="uid://du61fy7a6425k" path="res://Sound/Loop.mp3" id="10_d78xd"]
+[ext_resource type="Script" path="res://Scripts/DecaySkill.gd" id="10_pe0qf"]
 [ext_resource type="AudioStream" uid="uid://dt6ruryqo10o4" path="res://Sound/unit-moving-left-to-right.wav" id="11_mbcku"]
+[ext_resource type="Script" path="res://Scripts/WallCreatorSkill.gd" id="11_nb1c5"]
+[ext_resource type="PackedScene" uid="uid://cpp6ry35ocnh" path="res://Scenes/UI.tscn" id="15_ams2j"]
 
 [node name="MainScene" type="Node2D"]
 scale = Vector2(1, 0.99648)
 script = ExtResource("1_yad2o")
+
+[node name="CanvasLayer" parent="." instance=ExtResource("15_ams2j")]
 
 [node name="PCGMap" parent="." instance=ExtResource("6_q4uh2")]
 
@@ -39,14 +45,27 @@ script = ExtResource("3_e3ogq")
 [node name="JumpSkill" type="Node" parent="Warrior"]
 script = ExtResource("7_rtwm4")
 
-[node name="Wizard" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+[node name="Wizard" type="Node2D" parent="." node_paths=PackedStringArray("skill1", "skill2", "skill3", "sprite")]
 script = ExtResource("2_ff00v")
 movement_speed_max = 2
+skill1 = NodePath("TeleportSkill")
+skill2 = NodePath("DecaySkill")
+skill3 = NodePath("WallCreatorSkill")
 sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="Wizard"]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_psqu5")
+
+[node name="TeleportSkill" type="Node" parent="Wizard"]
+script = ExtResource("9_n6g67")
+coolDownMax = 2
+
+[node name="DecaySkill" type="Node" parent="Wizard"]
+script = ExtResource("10_pe0qf")
+
+[node name="WallCreatorSkill" type="Node" parent="Wizard"]
+script = ExtResource("11_nb1c5")
 
 [node name="Rouge" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("2_ff00v")

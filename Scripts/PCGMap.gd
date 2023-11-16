@@ -50,7 +50,6 @@ func get_spawn_location():
 			return calculateTileLocation(tile)
 
 func random_tile_selector(ID_number) -> Vector2i:
-	var list_of_tiles = [Vector2i(0,1),Vector2i(0,0),Vector2i(0,0)]	
 	if ID_number == 0:
 		return Vector2i(0,1)
 	elif ID_number == 1:
@@ -122,6 +121,8 @@ func getTileID(tile):
 	if layer == null:
 		return 99
 	var data = get_cell_tile_data(layer,tile)
+	if data == null:
+		return 99
 	var id = data.get_custom_data("ID")
 	if id == null:
 		return 99 
