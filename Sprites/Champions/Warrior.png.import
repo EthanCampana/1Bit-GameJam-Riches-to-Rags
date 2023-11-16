@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xebrcwxxfm7p"
-path="res://.godot/imported/MCBlocksBlackOutline.png-4f82e8b0fd0c332b7ae15a55ce272f3c.ctex"
+uid="uid://cb6ork1rnp63t"
+path="res://.godot/imported/Warrior.png-7ae9099003f0cac41892d2b2a99f9714.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/MCBlocksBlackOutline.png"
-dest_files=["res://.godot/imported/MCBlocksBlackOutline.png-4f82e8b0fd0c332b7ae15a55ce272f3c.ctex"]
+source_file="res://Sprites/Champions/Warrior.png"
+dest_files=["res://.godot/imported/Warrior.png-7ae9099003f0cac41892d2b2a99f9714.ctex"]
 
 [params]
 
