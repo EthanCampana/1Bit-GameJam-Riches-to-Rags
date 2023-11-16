@@ -1,72 +1,84 @@
-[gd_scene load_steps=3 format=3 uid="uid://tdnv57mt7qmw"]
+[gd_scene load_steps=5 format=3 uid="uid://tdnv57mt7qmw"]
 
 [ext_resource type="Texture2D" uid="uid://cb6ork1rnp63t" path="res://Sprites/CARTA_2-4.png" id="1_0ntrc"]
+[ext_resource type="Script" path="res://Panel_Background_Color.gd" id="1_hxt1l"]
+[ext_resource type="Texture2D" uid="uid://213u48exul80" path="res://UI_Animation/UI_Border.png" id="1_s6g4s"]
 [ext_resource type="Texture2D" uid="uid://k6mk24kee82x" path="res://Sprites/Champions/Wizard.png" id="2_165w3"]
 
-[node name="Panel" type="Panel"]
-anchors_preset = -1
-anchor_right = 1.065
-anchor_bottom = 1.045
-offset_right = 442.5
-offset_bottom = 252.5
-
-[node name="Warrior" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 108.0
-offset_top = 119.0
-offset_right = 876.0
-offset_bottom = 562.0
-texture = ExtResource("1_0ntrc")
-
-[node name="Button2" type="Button" parent="Warrior"]
-layout_mode = 0
-offset_left = 259.0
-offset_top = 26.0
-offset_right = 470.0
-offset_bottom = 418.0
-
-[node name="Wizard" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 37.0
-offset_top = 143.0
-offset_right = 274.0
-offset_bottom = 552.0
-texture = ExtResource("2_165w3")
-
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 42.0
-offset_top = 141.0
-offset_right = 282.0
-offset_bottom = 539.0
-
-[node name="Archer" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 712.0
-offset_top = 155.0
-offset_right = 958.0
-offset_bottom = 533.0
-
-[node name="Button3" type="Button" parent="Archer"]
-layout_mode = 0
-offset_left = -12.0
-offset_top = 1.0
-offset_right = 236.0
-offset_bottom = 373.0
-text = "Press Here
-"
-
-[node name="TextEdit" type="TextEdit" parent="."]
-modulate = Color(1, 1, 0.207843, 1)
-layout_mode = 0
-offset_left = 14.0
-offset_top = 7.0
-offset_right = 963.0
-offset_bottom = 104.0
-text = "Select a champion!
-"
+[node name="UI_Canva" type="CanvasLayer"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(500, 300)
-zoom = Vector2(0.5, 0.5)
+visible = false
+anchor_mode = 0
+zoom = Vector2(0.8, 0.8)
+
+[node name="Panel_Background" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hxt1l")
+
+[node name="UiBorder" type="Sprite2D" parent="Panel_Background"]
+position = Vector2(960, 541)
+scale = Vector2(2.50521, 2.49074)
+texture = ExtResource("1_s6g4s")
+
+[node name="Button2" type="Button" parent="Panel_Background"]
+offset_left = 73.0
+offset_top = 238.0
+offset_right = 527.0
+offset_bottom = 852.0
+
+[node name="Button3" type="Button" parent="Panel_Background"]
+offset_left = 660.0
+offset_top = 243.0
+offset_right = 1214.0
+offset_bottom = 849.0
+
+[node name="Warrior" type="TextureRect" parent="Panel_Background/Button3"]
+offset_left = -391.0
+offset_top = -78.0
+offset_right = 898.0
+offset_bottom = 1006.0
+texture = ExtResource("1_0ntrc")
+stretch_mode = 4
+
+[node name="Archer" type="TextureRect" parent="Panel_Background"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 1329.0
+offset_top = 253.0
+offset_right = 1696.0
+offset_bottom = 738.0
+
+[node name="Button" type="Button" parent="Panel_Background"]
+offset_left = 73.0
+offset_top = 238.0
+offset_right = 527.0
+offset_bottom = 852.0
+
+[node name="Wizard" type="TextureRect" parent="Panel_Background/Button"]
+offset_left = 65.0
+offset_top = -1.0
+offset_right = 461.0
+offset_bottom = 622.0
+texture = ExtResource("2_165w3")
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Panel_Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 0.086
+offset_left = 500.0
+offset_top = 32.0
+offset_right = 426.5
+offset_bottom = 79.69
+text = "Select a champion to start fighting!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
