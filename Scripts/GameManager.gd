@@ -16,31 +16,25 @@ var gameOver = false
 @onready var warrior : Champion = $Warrior
 @onready var wizard : Champion  = $Wizard
 @onready var rouge : Champion = $Rouge
-
-
-
-
+@onready var moveSound = $MoveSound
 
 
 func showMovement():
 	moveTiles = map.updateMovementTiles(currentChamp)
 	shownMovedTiles = true
 
-	
-
-
 func playerMove(location : Vector2i):
 	moving = true
 	currentChamp.tile_position = location
 	var tween = get_tree().create_tween()
-	tween.tween_property(currentChamp,"position",calculateTileLocation(location),.5).set_trans(tween.TRANS_SINE) 
+	moveSound.play()
+	tween.tween_property(currentChamp,"position",calculateTileLocation(location),2).set_trans(tween.TRANS_SINE) 
 	await tween.finished
+
 	shownMovedTiles = false
 	moving = false
 	map.clear_layer(8)
 	
-
-
 
 func calculateTileLocation(tile : Vector2i):
 	var endlocation : Vector2				
@@ -53,8 +47,6 @@ func calculateTileLocation(tile : Vector2i):
 
 func handleInput():
 	if !shownMovedTiles and currentChamp.movement_speed != 0:
-		# updateMovementTiles()
-		# showMovementTiles()
 		showMovement()
 	if Input.is_action_just_pressed("leftClick"):
 		if currentChamp.movement_speed != 0 && map.local_to_map(map.get_global_mouse_position()) in moveTiles && !moving:
@@ -70,7 +62,7 @@ func handleInput():
 		currentChamp.useSkill(1)
 	if Input.is_action_just_pressed("Skill3"):
 		currentChamp.useSkill(2)
-	if Input.is_action_just_pressed("ui_accept") and currentChamp.movement_speed == 0:
+	if Input.is_action_just_pressed("ui_accept"):
 		if map.getTileID(currentChamp.tile_position)== 2:
 				var locales = map.get_spawn_location()
 				print(locales)
@@ -82,6 +74,7 @@ func handleInput():
 
 
 func resetGame():
+	currentTurn = 0
 	turnOrder = [warrior, wizard, rouge]
 	turnOrder.shuffle()
 	map.reset()
@@ -108,7 +101,7 @@ func startTurn():
 
 func endTurn():
 	currentTurn = (currentTurn+1) % turnOrder.size() 
-
+	shownMovedTiles = false	
 	if turnOrder.size() == 1:
 		resetGame()
 		return
@@ -148,8 +141,6 @@ func _process(_delta):
 		gameSetup()
 	if !skillToggled and !gameOver:
 		handleInput()
-
-
 
 
 func on_check_death():

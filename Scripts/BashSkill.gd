@@ -55,18 +55,8 @@ func apply(target):
 	var newPos : Vector2i
 	var currentPos = champ.tile_position
 	var pos = target.tile_position 
-	if currentPos.x > pos.x and currentPos.y > pos.y:
-		newPos.y = pos.y -1
-		newPos.x = pos.x 
-	elif currentPos.x == pos.x and currentPos.y > pos.y:
-		newPos.y = pos.y - 1
-		newPos.x = pos.x + 1 
-	elif currentPos.x > pos.x and currentPos.y < pos.y:
-		newPos.y = pos.y + 1
-		newPos.x = pos.x 
-	elif currentPos.x < pos.x and currentPos.y < pos.y:
-		newPos.y = pos.y + 1
-		newPos.x = pos.x + 1
+	var index = selectedCells.find(target.tile_position)
+	newPos = map.get_surrounding_cells(pos)[index]
 	target.tile_position = newPos
 	var tween = get_tree().create_tween()
 	tween.tween_property(target,"position",calculateTileLocation(newPos),.5).set_trans(tween.TRANS_SINE) 
@@ -78,6 +68,8 @@ func apply(target):
 # This stuff is going to update once we have a firm understanding on how the map works
 func tile_selection():
 	selectedCells = map.get_surrounding_cells(champ.tile_position)
+	#SWNE
+	print(selectedCells)
 	for cell in selectedCells:
 		map.set_cell(8,cell,0,Vector2i(0,1),0)
 

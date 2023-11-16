@@ -10,6 +10,7 @@ var dict_preffered_tiles = {0: .80, 1: .30, 2: .15, 3: .30}
 var worldCycle = 0 
 
 func reset():
+	worldCycle = 0
 	for layer in range(get_layers_count()):
 		clear_layer(layer)
 	generate_chunk()
@@ -31,13 +32,9 @@ func updateLayerOpacity():
 			col.a = .9
 			set_layer_modulate(i,col)
 
-			
-
-
 
 
 func calculateTileLocation(tile : Vector2i):
-	print(tile)
 	var endlocation : Vector2				
 	var global = map_to_local(tile)	
 	endlocation.x = global.x
@@ -98,9 +95,6 @@ func normalize():
 	updateLayerOpacity()
 	GameController.emit_signal("check_death")
 	
-
-
-
 
 func getTileLayer(tile):
 	for i in range(get_layers_count()):

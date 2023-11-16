@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnwjktb6pkgxt"]
+[gd_scene load_steps=12 format=3 uid="uid://bnwjktb6pkgxt"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_yad2o"]
 [ext_resource type="Script" path="res://Scripts/champion.gd" id="2_ff00v"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://ljt4pgrhd8bi" path="res://Scenes/PCGMap.tscn" id="6_q4uh2"]
 [ext_resource type="Script" path="res://Scripts/JumpSkill.gd" id="7_rtwm4"]
 [ext_resource type="Texture2D" uid="uid://k6mk24kee82x" path="res://Sprites/Champions/Wizard.png" id="8_psqu5"]
+[ext_resource type="AudioStream" uid="uid://du61fy7a6425k" path="res://Sound/Loop.mp3" id="10_d78xd"]
+[ext_resource type="AudioStream" uid="uid://dt6ruryqo10o4" path="res://Sound/unit-moving-left-to-right.wav" id="11_mbcku"]
 
 [node name="MainScene" type="Node2D"]
 scale = Vector2(1, 0.99648)
@@ -58,3 +60,11 @@ texture = ExtResource("4_i5aso")
 [node name="GameCamera" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("4_p7ldp")]
 zoom = Vector2(0.75, 0.75)
 target_node = NodePath("../Warrior")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_d78xd")
+autoplay = true
+
+[node name="MoveSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_mbcku")
+volume_db = -10.0

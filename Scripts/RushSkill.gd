@@ -17,7 +17,7 @@ func select_tile(pos):
 
 
 func apply(target):
-	target.movement_speed *=2
+	target.movement_speed += 4 
 
 func tile_selection():
 	cell = champ.tile_position
