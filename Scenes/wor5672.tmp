@@ -1,0 +1,98 @@
+[gd_scene load_steps=24 format=3 uid="uid://cu8o3v13s0r6n"]
+
+[ext_resource type="PackedScene" uid="uid://bu4f5qs3hr0bx" path="res://Scenes/Tile_Label.tscn" id="2_ip5wg"]
+[ext_resource type="PackedScene" uid="uid://cybc5qthnhdgg" path="res://f_tiles.tscn" id="3_36ali"]
+[ext_resource type="Texture2D" uid="uid://cts1q3gtceat4" path="res://Background/CARTA_2-1.png" id="3_px62s"]
+[ext_resource type="Texture2D" uid="uid://xwhnsntomuh5" path="res://Background/CARTA_2-2.png" id="4_suhku"]
+[ext_resource type="Texture2D" uid="uid://dse0b66e6us86" path="res://Background/CARTA_2-3.png" id="5_3evf5"]
+[ext_resource type="Texture2D" uid="uid://b88cagw0m188b" path="res://Background/CARTA_2-4.png" id="6_6dqxy"]
+[ext_resource type="Texture2D" uid="uid://cpa4tmkrat1f6" path="res://Background/CARTA_2-5.png" id="7_yamcu"]
+[ext_resource type="Texture2D" uid="uid://bpf0dvcq08flc" path="res://Background/CARTA_2-6.png" id="8_cd4sc"]
+[ext_resource type="Texture2D" uid="uid://cb1tprwhflb57" path="res://Background/CARTA_2-7.png" id="9_sskeu"]
+[ext_resource type="Texture2D" uid="uid://dswdccy0f8woy" path="res://Background/CARTA_2-8.png" id="10_m6rlg"]
+[ext_resource type="Texture2D" uid="uid://be4u8qku4mlkq" path="res://Background/CARTA_2-9.png" id="11_w218s"]
+[ext_resource type="Script" path="res://Scenes/Background_Anim.gd" id="12_m5c4i"]
+
+[sub_resource type="GDScript" id="GDScript_nnxa7"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qg2oh"]
+texture = ExtResource("3_px62s")
+texture_region_size = Vector2i(768, 432)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oirm7"]
+texture = ExtResource("4_suhku")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q343p"]
+texture = ExtResource("5_3evf5")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bnirk"]
+texture = ExtResource("6_6dqxy")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fnx62"]
+texture = ExtResource("7_yamcu")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rymlh"]
+texture = ExtResource("8_cd4sc")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkg1f"]
+texture = ExtResource("9_sskeu")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q27yi"]
+texture = ExtResource("10_m6rlg")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3p2cf"]
+texture = ExtResource("11_w218s")
+
+[sub_resource type="TileSet" id="TileSet_m0g8y"]
+tile_size = Vector2i(768, 432)
+sources/0 = SubResource("TileSetAtlasSource_qg2oh")
+sources/1 = SubResource("TileSetAtlasSource_oirm7")
+sources/2 = SubResource("TileSetAtlasSource_q343p")
+sources/3 = SubResource("TileSetAtlasSource_bnirk")
+sources/4 = SubResource("TileSetAtlasSource_fnx62")
+sources/5 = SubResource("TileSetAtlasSource_rymlh")
+sources/6 = SubResource("TileSetAtlasSource_lkg1f")
+sources/7 = SubResource("TileSetAtlasSource_q27yi")
+sources/8 = SubResource("TileSetAtlasSource_3p2cf")
+
+[node name="World" type="Node2D"]
+script = SubResource("GDScript_nnxa7")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 100
+limit_top = 200
+
+[node name="Backgroun_Tilemap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_m0g8y")
+cell_quadrant_size = 128
+format = 2
+script = ExtResource("12_m5c4i")
+
+[node name="F_Tiles" parent="." instance=ExtResource("3_36ali")]
+layer_0/name = "Full Opa"
+layer_0/tile_data = PackedInt32Array()
+layer_1/name = "Half Opa"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 0.501961)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "1/4 Opa"
+layer_2/enabled = true
+layer_2/modulate = Color(1, 1, 1, 0.25098)
+layer_2/y_sort_enabled = false
+layer_2/y_sort_origin = 0
+layer_2/z_index = 0
+layer_2/tile_data = PackedInt32Array()
+layer_3/name = "1/8 Opa"
+layer_3/enabled = true
+layer_3/modulate = Color(1, 1, 1, 0.0313726)
+layer_3/y_sort_enabled = false
+layer_3/y_sort_origin = 0
+layer_3/z_index = 0
+layer_3/tile_data = PackedInt32Array()
+
+[node name="Tile_Label" parent="." instance=ExtResource("2_ip5wg")]
+metadata/_edit_use_anchors_ = true

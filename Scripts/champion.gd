@@ -8,12 +8,12 @@ var movement_speed : int
 @export var skill3 : Skill
 @export var map : PCGTileMap
 @export var sprite : Sprite2D
-var skills = [skill1, skill2, skill3]	
-
+var tile_position : Vector2i
+var skills = []
 
 
 func normalize():
-	updateCoolDowns()
+	# updateCoolDowns()
 	movement_speed = movement_speed_max
 
 
@@ -29,11 +29,16 @@ func updateCoolDowns():
 
 
 func useSkill(skillNum):
-	skills[skillNum].toggle(self,map)
+	print(skills)
+	print(skill1)
+	print(skill2)
+	print(skill3)
+	skills[skillNum].tog2gle(self,map)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	skills = [skill1, skill2, skill3]	
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
