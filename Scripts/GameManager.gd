@@ -123,13 +123,16 @@ func startTurn():
 
 func endTurn():
 	currentTurn = (currentTurn+1) % turnOrder.size() 
+
 	if currentTurn == 0:
+		print("We broke it")
 		map.normalize()
 	startTurn()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	GameController.connect("skill_toggled",self.on_skill_toggled)
+	GameController.connect("check_death",self.on_check_death)
 	GameController.wizard = wizard
 	GameController.warrior = warrior
 	GameController.rouge = rouge
@@ -161,7 +164,11 @@ func _process(_delta):
 
 func on_check_death():
 	for champ in turnOrder:
-		if !map.checkTileInMap(map.local_to_map(champ.position)):
+		var alive = map.checkTileInMap(champ.tile_position) 
+		print(alive)
+		if not alive:
+			print("YOU ARE DEAD")
+			turnOrder.erase(champ)
 			champ.queue_free()
 
 

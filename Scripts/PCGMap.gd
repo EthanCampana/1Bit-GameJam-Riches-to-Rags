@@ -10,6 +10,27 @@ var dict_preffered_tiles = {0: .80, 1: .30, 2: .15, 3: .30}
 var worldCycle = 0 
 
 
+
+func updateLayerOpacity():
+	for i in range(get_layers_count()-1):
+		if worldCycle + 2  >= i:
+			var col = get_layer_modulate(i)
+			col.a = .3
+			set_layer_modulate(i,col)
+		elif worldCycle + 5  >= i:
+			var col = get_layer_modulate(i)
+			col.a = .7
+			set_layer_modulate(i,col)
+		elif worldCycle + 6  >= i:
+			var col = get_layer_modulate(i)
+			col.a = .9
+			set_layer_modulate(i,col)
+
+			
+
+
+
+
 func calculateTileLocation(tile : Vector2i):
 	print(tile)
 	var endlocation : Vector2				
@@ -65,9 +86,14 @@ func pick_random_ID() -> int:
 func normalize():
 	worldCycle +=1
 	var i = 0
-	# while i < worldCycle:
-	# 	clear_layer(i)
+	while i < worldCycle:
+		clear_layer(i)
+		i+=1
 	updateMapData()
+	updateLayerOpacity()
+	GameController.emit_signal("check_death")
+	
+
 
 
 
@@ -151,6 +177,7 @@ func showMoveTiles(tiles):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	updateMapData()
+	updateLayerOpacity()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

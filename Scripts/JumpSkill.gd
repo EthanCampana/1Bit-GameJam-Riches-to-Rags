@@ -65,5 +65,5 @@ func tile_selection():
 			selectedCells.erase(cell)
 	for cell in selectedCells:
 		map.set_cell(8,cell,0,Vector2i(0,1),0)
-    
+	
 
