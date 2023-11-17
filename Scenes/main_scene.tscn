@@ -24,7 +24,6 @@ script = ExtResource("1_yad2o")
 [node name="CanvasLayer" parent="." instance=ExtResource("15_ams2j")]
 
 [node name="GameCamera" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("4_p7ldp")]
-scale = Vector2(1, 1)
 zoom = Vector2(0.75, 0.75)
 target_node = NodePath("../Warrior")
 
