@@ -1,9 +1,10 @@
 extends TileMap
 class_name PCGTileMap
-
+@onready var game_camera = $"../GameCamera"
 @export var width : int = 20
 @export var height : int = 30
-
+var currentColor : Color 
+var currentLayer : int = 0
 var mapData = []
 var dict_preffered_tiles = {0: .80, 1: .30, 2: .15, 3: .30}
 
@@ -17,21 +18,41 @@ func reset():
 	updateMapData()
 	updateLayerOpacity()
 
+
+func fade_opacity(val):
+	currentColor.a = val
+	set_layer_modulate(currentLayer,currentColor)
+
+
+
+
 func updateLayerOpacity():
+ 
 	for i in range(get_layers_count()-1):
+		# var tween = get_tree().create_tween()
+		# currentLayer = i
+		# currentColor = get_layer_modulate(i)
 		if worldCycle + 2  >= i:
+			# tween.tween_method(fade_opacity,currentColor.a,0.3,1).set_trans(tween.TRANS_SINE) 
+			# await tween.finished
+			# tween.stop()
 			var col = get_layer_modulate(i)
 			col.a = .3
 			set_layer_modulate(i,col)
 		elif worldCycle + 5  >= i:
+			# tween.tween_method(fade_opacity,currentColor.a,0.7,1).set_trans(tween.TRANS_SINE) 
+			# await tween.finished
+			# tween.stop()
 			var col = get_layer_modulate(i)
 			col.a = .7
 			set_layer_modulate(i,col)
 		elif worldCycle + 6  >= i:
+			# tween.tween_method(fade_opacity,currentColor.a,0.9,1).set_trans(tween.TRANS_SINE) 
+			# await tween.finished
+			# tween.stop()
 			var col = get_layer_modulate(i)
 			col.a = .9
 			set_layer_modulate(i,col)
-
 
 
 func calculateTileLocation(tile : Vector2i):
@@ -60,7 +81,6 @@ func random_tile_selector(ID_number) -> Vector2i:
 		return Vector2i(0,0)
 	return Vector2i(0,0)
 	
-	
 
 func generate_chunk():
 	var tile_pos = local_to_map(Vector2i(20,20))
@@ -68,7 +88,6 @@ func generate_chunk():
 		for y in range(height):
 			var ID = pick_random_ID()
 			set_cell(pick_random_layer(), Vector2i(tile_pos.x + x, tile_pos.y + y), ID, random_tile_selector(ID))
-
 
 
 func pick_random_layer() -> int:
@@ -83,11 +102,29 @@ func pick_random_ID() -> int:
 	return 0
 
 
+func decreaseTileLevel(tile):
+	var layer = getTileLayer(tile)
+	if layer == null:
+		return
+	var id = getTileID(tile)
+	erase_cell(layer,tile)
+	if layer == 0:
+		return
+	set_cell(layer-1,tile,id,random_tile_selector(id),0)
+	updateLayerOpacity()
+
 
 func normalize():
 	worldCycle +=1
 	var i = 0
 	while i < worldCycle:
+		var tween = get_tree().create_tween()
+		currentLayer = i
+		currentColor = get_layer_modulate(i)
+		game_camera.shake()
+		tween.tween_method(fade_opacity,currentColor.a,0,1).set_trans(tween.TRANS_SINE) 
+		await tween.finished
+		tween.stop()
 		clear_layer(i)
 		i+=1
 	updateMapData()
@@ -111,8 +148,6 @@ func updateMapData():
 	mapData = []
 	for x in range(get_layers_count()):
 		mapData += get_used_cells(x)
-
-
 
 
 
