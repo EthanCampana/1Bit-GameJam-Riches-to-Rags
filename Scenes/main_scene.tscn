@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bnwjktb6pkgxt"]
+[gd_scene load_steps=17 format=3 uid="uid://bnwjktb6pkgxt"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_yad2o"]
 [ext_resource type="Script" path="res://Scripts/champion.gd" id="2_ff00v"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Scripts/DecaySkill.gd" id="10_pe0qf"]
 [ext_resource type="AudioStream" uid="uid://dt6ruryqo10o4" path="res://Sound/unit-moving-left-to-right.wav" id="11_mbcku"]
 [ext_resource type="Script" path="res://Scripts/WallCreatorSkill.gd" id="11_nb1c5"]
+[ext_resource type="Texture2D" uid="uid://ba8r7ae8dcl3d" path="res://Sprites/Champions/Archer.png" id="13_dvaw6"]
 [ext_resource type="PackedScene" uid="uid://cpp6ry35ocnh" path="res://Scenes/UI.tscn" id="15_ams2j"]
 
 [node name="MainScene" type="Node2D"]
@@ -21,6 +22,11 @@ scale = Vector2(1, 0.99648)
 script = ExtResource("1_yad2o")
 
 [node name="CanvasLayer" parent="." instance=ExtResource("15_ams2j")]
+
+[node name="GameCamera" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("4_p7ldp")]
+scale = Vector2(1, 1)
+zoom = Vector2(0.75, 0.75)
+target_node = NodePath("../Warrior")
 
 [node name="PCGMap" parent="." instance=ExtResource("6_q4uh2")]
 
@@ -74,11 +80,7 @@ sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="Rouge"]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("4_i5aso")
-
-[node name="GameCamera" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("4_p7ldp")]
-zoom = Vector2(0.75, 0.75)
-target_node = NodePath("../Warrior")
+texture = ExtResource("13_dvaw6")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_d78xd")

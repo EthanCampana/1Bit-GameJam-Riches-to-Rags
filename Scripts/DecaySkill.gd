@@ -19,13 +19,7 @@ func select_tile(pos):
 
 # Decay one tile
 func apply(target):
-	var layer = map.getTileLayer(target)
-	var id = map.getTileID(target)
-	map.erase_cell(layer,target)
-	map.set_cell(layer-1,target,id,Vector2i(0,1),0)
-	map.updateLayerOpacity()
-
-
+	map.decreaseTileLevel(target)
 
 # Highlight the surrounding clickable tiles black
 func tile_selection():
@@ -45,6 +39,6 @@ func _process(_delta):
 		tile_selection()
 		if Input.is_action_just_pressed("leftClick"):
 			select_tile(map.local_to_map(map.get_global_mouse_position()))
-		if Input.is_action_just_pressed("ui_accept") and not usedSkill:
+		if Input.is_action_just_pressed("rightClick") and not usedSkill:
 			toggled = false
 			GameController.emit_signal("skill_toggled", toggled)
