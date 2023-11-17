@@ -10,7 +10,6 @@ var moveTiles = []
 var moving : bool = false
 var gameOver = false
 
-
 @onready var map : PCGTileMap = $PCGMap
 @onready var camera : GameCamera = $GameCamera
 @onready var warrior : Champion = $Warrior
@@ -25,6 +24,7 @@ func showMovement():
 
 func playerMove(location : Vector2i):
 	moving = true
+	map.decreaseTileLevel(currentChamp.tile_position)
 	currentChamp.tile_position = location
 	var tween = get_tree().create_tween()
 	moveSound.play()
@@ -33,11 +33,7 @@ func playerMove(location : Vector2i):
 	shownMovedTiles = false
 	moving = false
 	map.clear_layer(8)
-	
 
-	shownMovedTiles = false
-	moving = false
-	map.clear_layer(8)
 	
 
 func calculateTileLocation(tile : Vector2i):
@@ -59,10 +55,7 @@ func handleInput():
 			playerMove(map.local_to_map(map.get_global_mouse_position()))
 		
 	if Input.is_action_just_pressed("rightClick"):
-		var c = map.local_to_map(map.get_global_mouse_position())
-		print(c)
-		print(map.getTileID(c))
-
+		camera.shake()
 	if Input.is_action_just_pressed("Skill1"):
 		if !currentChamp.skill1.coolDownActive:
 			currentChamp.useSkill(0)
@@ -104,6 +97,7 @@ func gameEnd():
 	gameOver = true
 
 func startTurn():
+	shownMovedTiles = false	
 	currentChamp = turnOrder[currentTurn]
 	currentChamp.normalize()
 	camera.target_node = currentChamp
@@ -119,8 +113,8 @@ func endTurn():
 		gameEnd()
 		return
 	if currentTurn == 0:
-		print("We broke it")
 		map.normalize()
+		await get_tree().create_timer(3).timeout
 	startTurn()
 
 # Called when the node enters the scene tree for the first time.
