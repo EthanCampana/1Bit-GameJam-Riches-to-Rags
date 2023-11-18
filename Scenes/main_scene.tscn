@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bnwjktb6pkgxt"]
+[gd_scene load_steps=20 format=3 uid="uid://bnwjktb6pkgxt"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_yad2o"]
 [ext_resource type="Script" path="res://Scripts/champion.gd" id="2_ff00v"]
@@ -16,6 +16,9 @@
 [ext_resource type="Script" path="res://Scripts/WallCreatorSkill.gd" id="11_nb1c5"]
 [ext_resource type="Texture2D" uid="uid://ba8r7ae8dcl3d" path="res://Sprites/Champions/Archer.png" id="13_dvaw6"]
 [ext_resource type="PackedScene" uid="uid://cpp6ry35ocnh" path="res://Scenes/UI.tscn" id="15_ams2j"]
+[ext_resource type="Script" path="res://Scenes/DeadlyArrowSkill.gd" id="15_y4ob5"]
+[ext_resource type="Script" path="res://Scenes/HealingArrow.gd" id="16_ht8sv"]
+[ext_resource type="Script" path="res://Scenes/ConverterArrow.gd" id="17_ilee3"]
 
 [node name="MainScene" type="Node2D"]
 scale = Vector2(1, 0.99648)
@@ -72,14 +75,27 @@ script = ExtResource("10_pe0qf")
 [node name="WallCreatorSkill" type="Node" parent="Wizard"]
 script = ExtResource("11_nb1c5")
 
-[node name="Rouge" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+[node name="Rouge" type="Node2D" parent="." node_paths=PackedStringArray("skill1", "skill2", "skill3", "map", "sprite")]
 script = ExtResource("2_ff00v")
 movement_speed_max = 3
+skill1 = NodePath("DeadlyArrowSkill")
+skill2 = NodePath("HealingArrowSkill")
+skill3 = NodePath("ConverterArrowSkill")
+map = NodePath("../PCGMap")
 sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="Rouge"]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("13_dvaw6")
+
+[node name="DeadlyArrowSkill" type="Node" parent="Rouge"]
+script = ExtResource("15_y4ob5")
+
+[node name="HealingArrowSkill" type="Node" parent="Rouge"]
+script = ExtResource("16_ht8sv")
+
+[node name="ConverterArrowSkill" type="Node" parent="Rouge"]
+script = ExtResource("17_ilee3")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_d78xd")

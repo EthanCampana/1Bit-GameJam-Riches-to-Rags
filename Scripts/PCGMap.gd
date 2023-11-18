@@ -24,8 +24,6 @@ func fade_opacity(val):
 	set_layer_modulate(currentLayer,currentColor)
 
 
-
-
 func updateLayerOpacity():
  
 	for i in range(get_layers_count()-1):
@@ -113,6 +111,31 @@ func decreaseTileLevel(tile):
 	set_cell(layer-1,tile,id,random_tile_selector(id),0)
 	updateLayerOpacity()
 
+func decreaseTileLevelCompletely(tile):
+	var layer = getTileLayer(tile)
+	if layer == null:
+		return
+	var id = getTileID(tile)
+	erase_cell(layer,tile)
+	if layer == 0:
+		return
+	set_cell(layer-layer,tile,id,random_tile_selector(id),0)
+	updateLayerOpacity()
+
+func increaseTileLevel(tile):
+	var layer = getTileLayer(tile)
+	if layer == null:
+		return
+	var id = getTileID(tile)
+	erase_cell(layer,tile)
+	if layer == 0:
+		return
+	set_cell(layer+1,tile,id,random_tile_selector(id),0)
+	updateLayerOpacity()
+
+# Need to finish this. But if a player lands on a trap tile, they will be randomly teleported to any trap tile
+func landedTileTrap():
+	pass
 
 func normalize():
 	worldCycle +=1

@@ -57,7 +57,7 @@ func handleInput():
 	if Input.is_action_just_pressed("rightClick"):
 		camera.shake()
 	if Input.is_action_just_pressed("Skill1"):
-		if !currentChamp.skill1.coolDownActive:
+		if !currentChamp.skill1.coolDownActivew:
 			currentChamp.useSkill(0)
 	if Input.is_action_just_pressed("Skill2"):
 		if !currentChamp.skill2.coolDownActive:
